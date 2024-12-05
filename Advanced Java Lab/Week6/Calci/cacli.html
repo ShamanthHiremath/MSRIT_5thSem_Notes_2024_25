@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+</head>
+<body>
+    <h2>Simple Calculator</h2>
+    <form action="Calcserv" method="POST">
+        <label for="num1">Num1:</label>
+        <input type="text" name="num1" id="num1" srequired><br><br>
+
+        <label for="num2">Num2:</label>
+        <input type="text" name="num2" id="num2" required><br><br>
+
+        <label for="operator">Choose Operator:</label>
+        <select name="operator" id="operator" required>
+            <option value="+">Addition (+)</option>
+            <option value="-">Subtraction (-)</option>
+            <option value="*">Multiplication (*)</option>
+            <option value="/">Division (/)</option>
+            <option value="^">Exponentiation (num1^num2)</option>
+        </select><br><br>
+
+        <input type="submit" value="Calculate">
+    </form>
+</body>
+</html>
