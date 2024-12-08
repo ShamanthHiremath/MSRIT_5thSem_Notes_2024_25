@@ -1,0 +1,46 @@
+JDBC CONNECTION
+
+Video link- https://youtu.be/6DWGzrZ1I8k
+CREDITS: Ifrah Naaz (CSE, 2022 - 2026)
+
+Starting Eclipse
+ 1. Login to Ubuntu
+ 2. Head to Files -> Home -> jee-2023-03 -> Eclipse
+ 3. Right click-> Open in terminal
+ 4. Type ./eclipse and hit enter
+
+JDBC Project
+ 1. File-> New-> Java Project
+ If Java Project is not shown, go to Others and Type ‘Java Project’
+ 2. Enter project name, uncheck create module-info.java file
+ (This is an important step, otherwise it will show error)
+ 3. Right side you will have project explorer (if project explorer is not visible, in the above tab go to Window -> Show view -> Project Explorer)
+ 4. Right click on Project name -> Build Path -> Configure build path
+ 5. Under Java build path, got to libraries-> click on Modulepath-> Add
+ external Jars-> Downloads- > choose
+ "" my-sql-connector-java-5.1.34.bin.jar """
+If there is no jar file, go to """ http://172.1.14.200:81/clear_scripts """
+ 6. If it pops an unbound message under class path, click on that (JRE
+ System Library (unbound)) and click on Remove/delete
+ Then click on module path -> Add library -> JRE System Library -> Next & Finish
+ 7. Then click on Apply and close
+ 8. To add a file, right click on Project name -> New -> Class -> Give package
+ and class name -> Finish
+
+Running the program
+ 1. Right click on code/click on run button on top -> Java application
+ 2. Output will be displayed on console present below
+
+Viewing the XAMPPServer
+ 1. Open browser (eg. Chrome)-> type localhost/dashboard
+ 2. Click on myphpadmin
+ 3. All the databases on the system will be displayed there.
+
+Points to note:
+
+ 1. Make sure you have mentioned all imports
+ 2. For JDBC, know the url, user and password
+ 3. Write the codes in PreparedStatements (preferably) for JDBC
+ 4. Know the sql commands for creating database, creating table, insert
+ values into table, remove values (delete), update values, display values
+ (select)

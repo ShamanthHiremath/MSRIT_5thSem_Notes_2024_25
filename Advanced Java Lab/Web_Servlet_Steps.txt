@@ -1,0 +1,47 @@
+WEB SERVLET CONNECTION
+
+Video Link- https://youtu.be/h2tzYbI7i64
+CREDITS: Ifrah Naaz (CSE, 2022 - 2026)
+
+ Adding tomcat folder and files (This step might already been done, if yes... delete tomcat folder and redo the steps)
+
+ 1. Download the apache tomcat 10.1 from any link they give, or internet or
+ find it in downloads
+ 2. File -> Other locations -> Ubuntu/Computer -> opt folder
+ 3. If opt folder does not open, open with terminal, type """ sudo chmod 777 /opt """
+ 4. Now open opt folder, create a folder named """ tomcat """. Then go to terminal
+ (if folder does not have write permission), and type """ sudo chmod 777 /opt/Tomcat """
+ 5. Go to downloads, click on tomcat zip file -> extract -> put the path as tomcat folder -> extract all
+
+ Creating the Web Servlet Project
+
+ 1. Open eclipse (refer previous steps)
+ 2. File -> New -> Dynamic Web Project (search in otehrs if not there)
+ 3. Enter Project name
+ 4. Under Target runtime -> new runtime-> select Apache-> v 10.1->
+ Browse-> choose the file we extracted in Tomcat folder
+ 5. Under Dynamic Web Browser version-> choose 5.0 (do not use 6.0)
+ 6. Hit on Next -> Check Generate dynamic XML check box -> Finish
+ 7. Right click on Project name -> Build Path -> Configure build path
+ 8. If it shows an unbound message under class path, click on it (JRE System Library (unbound)) and click on Remove
+ 9. Then click on module path -> Add library -> JRE System Library -> Next & Finish
+ 10. Under class path, Server Runtime Apache Tomcat should be visible
+ 11. Apply and close
+
+ Servlet Codes
+
+ 1. Right click on Project name -> New -> HTML file (client part)
+ 2. Enter filename -> finish
+ 3. Right click on Project name -> New -> Servlet file (server part)
+ 4. Enter package name and class name (Class name should be same as
+ action attribute for form tag mentioned in html file ) -> Finish
+ Run Codes
+ 1. Window -> Web Browser -> Choose Firefox (recommended cuz it works)
+ 2. Right click on html file -> Run As -> Run on server -> Apache 10.1 ->
+ finish
+
+ Points to note:
+
+ 1. Make sure you have mentioned all imports
+ 2. If the servlet program is not running again, go to server-> right click on
+ Tomcat 10.1-> Restart (it should show started, synchornized)
