@@ -26,9 +26,9 @@ public class stu {
 
             // Inserting sample accounts
             System.out.println("Inserting sample accounts...");
-//            insertAccount(preparedStatement, 101, "Alice", "Savings", 5000.75);
-//            insertAccount(preparedStatement, 102, "Bob", "Checking", 10000.50);
-//            insertAccount(preparedStatement, 103, "Charlie", "Savings", 3000.25);
+           insertAccount(preparedStatement, 101, "Alice", "Savings", 5000.75);
+           insertAccount(preparedStatement, 102, "Bob", "Checking", 10000.50);
+           insertAccount(preparedStatement, 103, "Charlie", "Savings", 3000.25);
             
             // Commit the transaction
             connection.commit();

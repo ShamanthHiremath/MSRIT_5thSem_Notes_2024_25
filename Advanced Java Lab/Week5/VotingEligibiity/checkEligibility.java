@@ -6,27 +6,6 @@ import java.util.*;
 
 public class VoterEligibilityServlet extends HttpServlet {
 
-    // doGet method to display the form
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-
-        out.println("<html>");
-        out.println("<head><title>Voter Eligibility</title></head>");
-        out.println("<body>");
-        out.println("<h2>Check Voter Eligibility</h2>");
-        out.println("<form action='checkEligibility' method='POST'>");
-        out.println("First Name: <input type='text' name='firstName' required><br>");
-        out.println("Last Name: <input type='text' name='lastName' required><br>");
-        out.println("Email ID: <input type='email' name='email' required><br>");
-        out.println("Date of Birth: <input type='date' name='dob' required><br>");
-        out.println("<input type='submit' value='Check Eligibility'>");
-        out.println("</form>");
-        out.println("</body>");
-        out.println("</html>");
-    }
-
     // doPost method to process the form data
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,7 +24,7 @@ public class VoterEligibilityServlet extends HttpServlet {
 
             // Get the current date
             Calendar today = Calendar.getInstance();
-            int age = today.get(Calendar.YEAR) - dob.getYear() - 1900;
+            int age = today.get(Calendar.YEAR) - dob.getYear() - 1900; //Date class counts years starting from 1900. For example, if you create a Date object for the year 2000, it internally represents the year as 100.
 
             if (today.get(Calendar.MONTH) + 1 < dob.getMonth() + 1 || 
                 (today.get(Calendar.MONTH) + 1 == dob.getMonth() + 1 && today.get(Calendar.DATE) < dob.getDate())) {
