@@ -1,0 +1,26 @@
+Servlet Programs:
+
+required imports -->>
+
+import jakarta.servlet.annotation.WebServlet;
+
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletReponse;
+
+import java.io.IOException;
+import jakarta.servlet.ServletException;
+import java.text.*;
+import java.util.*;
+
+functions -->>
+
+DATATYPE var = request.getParamater("INPUT_NAME_IN_FORM");
+
+response.setContentType("text/html");
+
+PrintWriter out = response.getWriter();
+out.println("HTML_CONTENT");
+
+response.sendRedirect("FILENAME.html");
+

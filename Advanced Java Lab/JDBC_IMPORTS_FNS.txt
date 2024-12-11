@@ -1,0 +1,90 @@
+JDBC Programs:
+
+imports -->>
+
+import java.util.Scanner;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+functions -->>
+
+Scanner sc = new Scanner(System.in);
+
+URL = "jdbc:mysql://localhost:3306/";
+USER = "root";
+PASS = "";
+
+Connection conn = DriverManager.getConnection(URL, USER, PASS);
+
+Statement stmt = conn.createStatement(); //statement is used for normal implicitly defined query executions
+
+String SQL_QUERY = "ANY SQL QUERY";
+
+stmt.executeUpdate(SQL_QUERY); //used for insertion, updates, deletions
+
+ResultSet rsAll = stmt.executeQuery(SQL_QUERY); //usuallly used for display tasks
+
+while(rsAll.next()){
+    rsAll.getDATATYPE("ATTRIBUTE_IN_TABLE");
+    eX: int ID = rsAll.getInt("ID");
+}
+
+String SQL_?_QUERY = "SELECT * FROM Department WHERE Dept_ID = ? AND Name = ?";
+
+PreparedStatement prepstmt = conn.prepareStatement(SQL_?_QUERY); //statement is used for user-defined explicitly defined query executions
+
+prepStmt.setDATATYPE(?_POSTN, ATTRIBUTE);
+eX: preparedStatement.setInt(1, deptId);
+
+rsAll = prepstmt.executeQuery();
+
+rsAll.next();
+
+int rowsAffected = preparedStatement.executeUpdate();
+
+//updatable resultsets
+stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+resultSet.absolute(Nth_ROW); // move cursor to Nth row
+
+resultSet.isBeforeFirst() || resultSet.isAfterLast()
+
+//auto-commits
+conn.setAutoCommit(false); // Disable auto-commit for transaction management
+
+// after some updates, commit the DB
+conn.commit();
+
+try {
+    statement.executeUpdate(faultyInsertSQL);
+    // This will fail due to negative balance
+    conn.commit(); 
+    // This will not be reached if the exception is thrown
+} 
+catch (SQLException e) {
+    conn.rollback();
+    // Rollback in case of an error
+    System.out.println("Transaction rolled back due to error: " + e.getMessage());
+}
+
+// Demonstrating Savepoints
+Savepoint savepoint = conn.setSavepoint("BeforeFaultyInsert");
+
+conn.rollback(savepoint); // Rollback to savepoint if error occurs
+
+
+exceptions -->>
+
+try( stmts, connections ) or try{
+    //stmts
+}
+catch (SQLException e) {
+    e.printStackTrace();
+}
+
+
