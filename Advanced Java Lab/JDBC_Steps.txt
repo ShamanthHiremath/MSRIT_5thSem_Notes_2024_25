@@ -16,7 +16,7 @@ JDBC Project
  (This is an important step, otherwise it will show error)
  3. Right side you will have project explorer (if project explorer is not visible, in the above tab go to Window -> Show view -> Project Explorer)
  4. Right click on Project name -> Build Path -> Configure build path
- 5. Under Java build path, got to libraries-> click on Modulepath-> Add
+ 5. Under Java build path, go to libraries-> click on Modulepath-> Add
  external Jars-> Downloads- > choose
  "" my-sql-connector-java-5.1.34.bin.jar """
 If there is no jar file, go to """ http://172.1.14.200:81/clear_scripts """
