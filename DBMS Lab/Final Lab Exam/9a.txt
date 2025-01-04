@@ -1,0 +1,118 @@
+-- Create Customer table
+CREATE TABLE CUSTOMER (
+    cust_no INT PRIMARY KEY,
+    cname VARCHAR(50) NOT NULL,
+    city VARCHAR(50) NOT NULL
+);
+
+-- Create Order table
+CREATE TABLE ORDERS (
+    order_no INT PRIMARY KEY,
+    odate DATE NOT NULL,
+    cust_no INT NOT NULL,
+    ord_Amt DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (cust_no) REFERENCES CUSTOMER(cust_no)
+);
+
+-- Create Item table
+CREATE TABLE ITEM (
+    item_no INT PRIMARY KEY,
+    unit_price DECIMAL(10,2) NOT NULL
+);
+
+-- Create Order-Item table
+CREATE TABLE ORDER_ITEM (
+    order_no INT NOT NULL,
+    item_no INT NOT NULL,
+    qty INT NOT NULL,
+    PRIMARY KEY (order_no, item_no),
+    FOREIGN KEY (order_no) REFERENCES ORDERS(order_no),
+    FOREIGN KEY (item_no) REFERENCES ITEM(item_no)
+);
+
+-- Create Shipment table
+CREATE TABLE SHIPMENT (
+    order_no INT PRIMARY KEY,
+    ship_date DATE NOT NULL,
+    FOREIGN KEY (order_no) REFERENCES ORDERS(order_no)
+);
+
+-- Insert sample data into Customer
+INSERT INTO CUSTOMER VALUES
+(1, 'John Smith', 'New York'),
+(2, 'Mary Johnson', 'Los Angeles'),
+(3, 'Robert Brown', 'Chicago'),
+(4, 'Sarah Wilson', 'Houston'),
+(5, 'James Davis', 'Phoenix');
+
+-- Insert sample data into Orders
+INSERT INTO ORDERS VALUES
+(101, '2024-01-15', 1, 1500.00),
+(102, '2024-01-15', 2, 2000.00),
+(103, '2024-01-16', 1, 1000.00),
+(104, '2024-01-17', 3, 3000.00),
+(105, '2024-01-17', 1, 2500.00),
+(106, '2024-01-18', 4, 1800.00);
+
+-- Insert sample data into Item
+INSERT INTO ITEM VALUES
+(1, 100.00),
+(2, 200.00),
+(3, 150.00),
+(4, 300.00),
+(5, 250.00);
+
+-- Insert sample data into Order_Item
+INSERT INTO ORDER_ITEM VALUES
+(101, 1, 5),
+(101, 2, 3),
+(102, 3, 4),
+(103, 4, 2),
+(104, 5, 6),
+(105, 1, 8);
+
+-- Insert sample data into Shipment
+INSERT INTO SHIPMENT VALUES
+(101, '2024-01-16'),
+(102, '2024-01-17'),
+(103, '2024-01-18'),
+(104, '2024-01-19'),
+(105, '2024-01-20');
+
+-- Query i: Customers who placed more than 2 orders
+SELECT C.cname
+FROM CUSTOMER C
+JOIN ORDERS O ON C.cust_no = O.cust_no
+GROUP BY C.cust_no, C.cname
+HAVING COUNT(*) > 2;
+
+--OR
+Select Cname FROM CUSTOMER
+where  (Select count(Ono) from ORDER1 where Cno=Ocno)>=2;
+
+-- Query ii: Total order amount for each day
+SELECT odate, SUM(ord_Amt) as Total_Amount
+FROM ORDERS
+GROUP BY odate
+ORDER BY odate;
+
+--OR 
+Select Odate,SUM(Oamt) 
+from ORDER
+group by Odate;
+
+
+-- Query iii: Customer details with largest order amount
+SELECT C.*
+FROM CUSTOMER C
+JOIN ORDERS O ON C.cust_no = O.cust_no
+WHERE O.ord_Amt = (
+    SELECT MAX(ord_Amt)
+    FROM ORDERS
+);
+
+--OR 
+
+Select Cno,Cname,Ccity 
+from CUSTOMER,ORDER1 
+where Cno=Ocno and Oamt in(select max(Oamt) from ORDER1);

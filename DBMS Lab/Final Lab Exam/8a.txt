@@ -1,0 +1,106 @@
+-- Create Player table
+CREATE TABLE PLAYER (
+    PId INT PRIMARY KEY,
+    Lname VARCHAR(50) NOT NULL,
+    Fname VARCHAR(50) NOT NULL,
+    Country VARCHAR(50) NOT NULL,
+    Yborn INT NOT NULL,
+    Bplace VARCHAR(50) NOT NULL
+);
+
+-- Create Match table
+CREATE TABLE MATCH (
+    MatchId INT PRIMARY KEY,
+    Team1 VARCHAR(50) NOT NULL,
+    Team2 VARCHAR(50) NOT NULL,
+    Ground VARCHAR(100) NOT NULL,
+    Date DATE NOT NULL,
+    Winner VARCHAR(50) NOT NULL
+);
+
+-- Create Batting table
+CREATE TABLE BATTING (
+    MatchId INT NOT NULL,
+    PId INT NOT NULL,
+    Nruns INT NOT NULL,
+    Fours INT NOT NULL,
+    Sixes INT NOT NULL,
+    PRIMARY KEY (MatchId, PId),
+    FOREIGN KEY (MatchId) REFERENCES MATCH(MatchId),
+    FOREIGN KEY (PId) REFERENCES PLAYER(PId)
+);
+
+-- Create Bowling table
+CREATE TABLE BOWLING (
+    MatchId INT NOT NULL,
+    PId INT NOT NULL,
+    Novers INT NOT NULL,
+    Maidens INT NOT NULL,
+    Nruns INT NOT NULL,
+    Nwickets INT NOT NULL,
+    PRIMARY KEY (MatchId, PId),
+    FOREIGN KEY (MatchId) REFERENCES MATCH(MatchId),
+    FOREIGN KEY (PId) REFERENCES PLAYER(PId)
+);
+
+-- Insert sample data into Player
+INSERT INTO PLAYER VALUES
+(1, 'Dhoni', 'MS', 'India', 1981, 'Ranchi'),
+(2, 'Smith', 'Steve', 'Australia', 1989, 'Sydney'),
+(3, 'Kohli', 'Virat', 'India', 1988, 'Delhi'),
+(4, 'Warner', 'David', 'Australia', 1986, 'Sydney'),
+(5, 'Root', 'Joe', 'England', 1990, 'Sheffield');
+
+-- Insert sample data into Match
+INSERT INTO MATCH VALUES
+(2689, 'Australia', 'India', 'MCG', '2024-01-15', 'India'),
+(2690, 'England', 'Australia', 'Lords', '2024-02-01', 'Australia'),
+(2691, 'Australia', 'South Africa', 'SCG', '2024-02-15', 'Australia'),
+(2692, 'India', 'England', 'Eden Gardens', '2024-03-01', 'India'),
+(2693, 'Australia', 'New Zealand', 'WACA', '2024-03-15', 'Australia');
+
+-- Insert sample data into Batting
+INSERT INTO BATTING VALUES
+(2689, 1, 75, 6, 2),
+(2689, 3, 85, 8, 3),
+(2690, 2, 65, 5, 1),
+(2691, 4, 95, 10, 4),
+(2692, 1, 55, 4, 1);
+
+-- Insert sample data into Bowling
+INSERT INTO BOWLING VALUES
+(2689, 2, 10, 2, 45, 3),
+(2690, 5, 8, 1, 35, 2),
+(2691, 3, 6, 0, 30, 1),
+(2692, 4, 9, 2, 40, 4),
+(2693, 2, 7, 1, 25, 2);
+
+-- Query i: Display sorted ground names where Australia played as team1
+SELECT DISTINCT Ground
+FROM MATCH
+WHERE Team1 = 'Australia'
+ORDER BY Ground; 
+
+
+-- Query ii: Find match information where Dhoni did batting
+SELECT M.*
+FROM MATCH M
+JOIN BATTING B ON M.MatchId = B.MatchId
+JOIN PLAYER P ON B.PId = P.PId
+WHERE P.Lname = 'Dhoni';
+
+--OR 
+SELECT *
+FROM (PLAYER natural join MATCHING) natural join BATTING 
+WHERE Fname='Dhoni';
+
+-- Query iii: Find players who did batting in match 2689
+SELECT P.Fname, P.Lname
+FROM PLAYER P
+JOIN BATTING B ON P.PId = B.PId
+WHERE B.MatchId = 2689;
+
+--OR 
+SELECT Fname,Lname 
+FROM (PLAYER natural join MATCHING) natural join BATTING 
+WHERE MatchID=2686;

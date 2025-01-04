@@ -1,0 +1,78 @@
+CREATE TABLE SUPPLIER (
+    Sid VARCHAR(10) NOT NULL PRIMARY KEY,
+    Sname VARCHAR(50) NOT NULL,
+    Address VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE PART (
+    PID VARCHAR(10) NOT NULL PRIMARY KEY,
+    Pname VARCHAR(50) NOT NULL,
+    Color VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE SHIPMENT (
+    Sid VARCHAR(10) NOT NULL,
+    PID VARCHAR(10) NOT NULL,
+    Cost DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (Sid, PID),
+    FOREIGN KEY (Sid) REFERENCES SUPPLIER(Sid),
+    FOREIGN KEY (PID) REFERENCES PART(PID)
+);
+
+INSERT INTO SUPPLIER VALUES
+('S1', 'John Smith', '123 Main St'),
+('S2', 'Mary Johnson', '456 Oak Ave'),
+('S3', 'Robert Brown', '789 Pine Rd'),
+('S4', 'Sarah Wilson', '321 Elm St'),
+('S5', 'James Davis', '654 Maple Dr');
+
+INSERT INTO PART VALUES
+('P1', 'Bolt', 'Green'),
+('P2', 'Nut', 'Red'),
+('P3', 'Screw', 'Blue'),
+('P4', 'Washer', 'Green'),
+('P5', 'Nail', 'Black');
+
+INSERT INTO SHIPMENT VALUES
+('S1', 'P1', 100.00),
+('S1', 'P2', 150.00),
+('S2', 'P3', 200.00),
+('S3', 'P4', 120.00),
+('S3', 'P5', 180.00),
+('S4', 'P1', 110.00),
+('S5', 'P2', 160.00);
+
+-- Query i: Find Sid's of suppliers who supply green parts
+SELECT DISTINCT S.Sid
+FROM SUPPLIER S
+JOIN SHIPMENT SH ON S.Sid = SH.Sid
+JOIN PART P ON SH.PID = P.PID
+WHERE P.Color = 'Green';
+
+-- OR
+
+SELECT Distinct S.Sid
+FROM SUPPLIER S, PART P, SHIPMENT C
+WHERE C.Sid=S.Sid AND P.PID=C.PID AND P.Color like 'Green';
+
+-- Query ii: Count of parts supplied by each supplier
+SELECT S.Sname, COUNT(SH.PID) as Total_Parts
+FROM SUPPLIER S
+LEFT JOIN SHIPMENT SH ON S.Sid = SH.Sid
+GROUP BY S.Sid, S.Sname;
+
+--OR 
+SELECT S.Sname, COUNT(*) as PartCount
+FROM SUPPLIER S, SHIPMENT C, PART P
+WHERE C.Sid = S.Sid and P.PID = C.PID
+GROUP BY S.Sname, S.Sid;
+
+-- Query iii: Update part color for supplier S3 to yellow
+UPDATE PART
+SET Color = 'Yellow'
+WHERE PID IN (
+    SELECT PID
+    FROM SHIPMENT
+    WHERE Sid = 'S3'
+);
+

@@ -1,0 +1,112 @@
+-- Create Person table
+CREATE TABLE PERSON (
+    driver_id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    address VARCHAR(100) NOT NULL
+);
+
+-- Create Car table
+CREATE TABLE CAR (
+    Regno VARCHAR(20) PRIMARY KEY,
+    model VARCHAR(50) NOT NULL,
+    year INT NOT NULL
+);
+
+-- Create Accident table
+CREATE TABLE ACCIDENT (
+    report_number INT PRIMARY KEY,
+    acc_date DATE NOT NULL,
+    location VARCHAR(100) NOT NULL
+);
+
+-- Create Owns table
+CREATE TABLE OWNS (
+    driver_id INT NOT NULL,
+    Regno VARCHAR(20) NOT NULL,
+    PRIMARY KEY (driver_id, Regno),
+    FOREIGN KEY (driver_id) REFERENCES PERSON(driver_id),
+    FOREIGN KEY (Regno) REFERENCES CAR(Regno)
+);
+
+-- Create Participated table
+CREATE TABLE PARTICIPATED (
+    driver_id INT NOT NULL,
+    Regno VARCHAR(20) NOT NULL,
+    report_number INT NOT NULL,
+    damageamount DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (driver_id, Regno, report_number),
+    FOREIGN KEY (driver_id) REFERENCES PERSON(driver_id),
+    FOREIGN KEY (Regno) REFERENCES CAR(Regno),
+    FOREIGN KEY (report_number) REFERENCES ACCIDENT(report_number)
+);
+
+-- Insert sample data into Person
+INSERT INTO PERSON VALUES
+(1, 'John Smith', '123 Main St'),
+(2, 'Mary Johnson', '456 Oak Ave'),
+(3, 'Robert Brown', '789 Pine Rd'),
+(4, 'Sarah Wilson', '321 Elm St'),
+(5, 'James Davis', '654 Maple Dr');
+
+-- Insert sample data into Car
+INSERT INTO CAR VALUES
+('ABC123', 'Toyota Camry', 2020),
+('XYZ789', 'Honda Civic', 2019),
+('DEF456', 'Ford Focus', 2021),
+('GHI789', 'BMW X5', 2018),
+('JKL012', 'Tesla Model 3', 2022);
+
+-- Insert sample data into Accident
+INSERT INTO ACCIDENT VALUES
+(1, '2024-01-15', 'Main Street'),
+(2, '2024-02-20', 'Oak Avenue'),
+(3, '2024-03-10', 'Pine Road'),
+(4, '2024-03-25', 'Elm Street'),
+(5, '2024-04-05', 'Maple Drive');
+
+-- Insert sample data into Owns
+INSERT INTO OWNS VALUES
+(1, 'ABC123'),
+(1, 'XYZ789'),
+(2, 'DEF456'),
+(3, 'GHI789'),
+(4, 'JKL012');
+
+-- Insert sample data into Participated
+INSERT INTO PARTICIPATED VALUES
+(1, 'ABC123', 1, 2500.00),
+(2, 'DEF456', 2, 3500.00),
+(3, 'GHI789', 3, 5000.00),
+(1, 'XYZ789', 4, 1500.00),
+(4, 'JKL012', 5, 4000.00);
+
+-- Query i: Display unique Regno's of cars involved in accidents
+SELECT DISTINCT Regno
+FROM PARTICIPATED;
+
+-- Query ii: Display car Regno and model with maximum damage amount
+SELECT C.Regno, C.model
+FROM CAR C
+JOIN PARTICIPATED P ON C.Regno = P.Regno
+WHERE P.damageamount = (
+    SELECT MAX(damageamount)
+    FROM PARTICIPATED
+);
+
+--OR 
+Select  Pregno,Model 
+from CAR, PARTICIPATED 
+where Pregno=Regno and Damage in (select max(Damage) from PARTICIPATED);
+
+
+-- Query iii: Display number of cars owned by each driver
+
+Select  Odid,count(*) as no_of_cars
+from OWNS
+group by Odid;
+
+--OR 
+SELECT P.driver_id, P.name, COUNT(O.Regno) as Number_of_Cars
+FROM PERSON P
+LEFT JOIN OWNS O ON P.driver_id = O.driver_id
+GROUP BY P.driver_id, P.name;

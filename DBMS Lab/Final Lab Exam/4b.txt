@@ -1,0 +1,184 @@
+// Create database
+use tourism_db
+
+// Create collection
+db.createCollection("tourist_places")
+
+// Sample Tourist Places Documents
+db.tourist_places.insertMany([
+    {
+        place: "Hampi",
+        address: {
+            state: "Karnataka"
+        },
+        id: "T001",
+        tourist_attractions: ["Virupaksha Temple", "Stone Chariot", "Vittala Temple", "Elephant Stables"],
+        best_time: "October to March",
+        modes_of_transport: {
+            nearest_airport: "Hubli Airport (143 km)",
+            railway_station: "Hospet Junction (13 km)",
+            road: "Well connected by buses"
+        },
+        accommodation: ["Heritage Hotels", "Budget Hotels", "Homestays"],
+        food_specialties: ["North Karnataka Thali", "Local Street Food"]
+    },
+    {
+        place: "Munnar",
+        address: {
+            state: "Kerala"
+        },
+        id: "T002",
+        tourist_attractions: ["Tea Gardens", "Eravikulam National Park", "Echo Point", "Tea Museum"],
+        best_time: "September to March",
+        modes_of_transport: {
+            nearest_airport: "Cochin International Airport (110 km)",
+            railway_station: "Aluva Railway Station (110 km)",
+            road: "Regular buses available"
+        },
+        accommodation: ["Luxury Resorts", "Tea Estate Stays"],
+        food_specialties: ["Kerala Fish Curry", "Appam"]
+    },
+    {
+        place: "Mysore",
+        address: {
+            state: "Karnataka"
+        },
+        id: "T003",
+        tourist_attractions: ["Mysore Palace", "Chamundi Hills", "Brindavan Gardens"],
+        best_time: "October to February",
+        modes_of_transport: {
+            nearest_airport: "Mysore Airport (10 km)",
+            railway_station: "Mysore Junction",
+            road: "Well connected by highways"
+        },
+        accommodation: ["Palace Hotels", "City Hotels"],
+        food_specialties: ["Mysore Pak", "Mysore Masala Dosa"]
+    },
+    {
+        place: "Wayanad",
+        address: {
+            state: "Kerala"
+        },
+        id: "T004",
+        tourist_attractions: ["Chembra Peak", "Banasura Dam", "Edakkal Caves"],
+        best_time: "October to May",
+        modes_of_transport: {
+            nearest_airport: "Calicut International Airport (65 km)",
+            railway_station: "Kozhikode Railway Station",
+            road: "Regular bus service"
+        },
+        accommodation: ["Tree Houses", "Forest Lodges"],
+        food_specialties: ["Kerala Biryani", "Bamboo Rice"]
+    },
+    {
+        place: "Coorg",
+        address: {
+            state: "Karnataka"
+        },
+        id: "T005",
+        tourist_attractions: ["Abbey Falls", "Dubare Elephant Camp", "Raja's Seat"],
+        best_time: "October to March",
+        modes_of_transport: {
+            nearest_airport: "Mangalore Airport (160 km)",
+            railway_station: "Mysore Railway Station",
+            road: "Private and public buses"
+        },
+        accommodation: ["Coffee Estate Stays", "Resorts"],
+        food_specialties: ["Pandi Curry", "Coorg Coffee"]
+    },
+    {
+        place: "Alleppey",
+        address: {
+            state: "Kerala"
+        },
+        id: "T006",
+        tourist_attractions: ["Backwaters", "Alappuzha Beach", "Houseboats"],
+        best_time: "November to February",
+        modes_of_transport: {
+            nearest_airport: "Cochin International Airport",
+            railway_station: "Alleppey Railway Station",
+            road: "State highways"
+        },
+        accommodation: ["Houseboats", "Beach Resorts"],
+        food_specialties: ["Seafood", "Kerala Sadya"]
+    },
+    {
+        place: "Badami",
+        address: {
+            state: "Karnataka"
+        },
+        id: "T007",
+        tourist_attractions: ["Cave Temples", "Agastya Lake", "Archaeological Museum"],
+        best_time: "November to February",
+        modes_of_transport: {
+            nearest_airport: "Hubli Airport",
+            railway_station: "Badami Railway Station",
+            road: "State transport buses"
+        },
+        accommodation: ["Heritage Hotels", "Guest Houses"],
+        food_specialties: ["North Karnataka Cuisine"]
+    },
+    {
+        place: "Thekkady",
+        address: {
+            state: "Kerala"
+        },
+        id: "T008",
+        tourist_attractions: ["Periyar Wildlife Sanctuary", "Spice Gardens", "Boat Safari"],
+        best_time: "September to May",
+        modes_of_transport: {
+            nearest_airport: "Madurai Airport",
+            railway_station: "Kottayam Railway Station",
+            road: "Regular buses"
+        },
+        accommodation: ["Jungle Lodges", "Eco Resorts"],
+        food_specialties: ["Spicy Kerala Cuisine"]
+    },
+    {
+        place: "Gokarna",
+        address: {
+            state: "Karnataka"
+        },
+        id: "T009",
+        tourist_attractions: ["Om Beach", "Mahabaleshwar Temple", "Paradise Beach"],
+        best_time: "October to March",
+        modes_of_transport: {
+            nearest_airport: "Dabolim Airport, Goa",
+            railway_station: "Gokarna Road Station",
+            road: "State transport buses"
+        },
+        accommodation: ["Beach Huts", "Resorts"],
+        food_specialties: ["Seafood", "Coastal Karnataka Cuisine"]
+    },
+    {
+        place: "Kovalam",
+        address: {
+            state: "Kerala"
+        },
+        id: "T010",
+        tourist_attractions: ["Lighthouse Beach", "Hawah Beach", "Water Sports"],
+        best_time: "September to March",
+        modes_of_transport: {
+            nearest_airport: "Trivandrum International Airport",
+            railway_station: "Trivandrum Central",
+            road: "Local transport"
+        },
+        accommodation: ["Beach Resorts", "Hotels"],
+        food_specialties: ["Kerala Seafood"]
+    }
+]);
+
+// Query 1: List all tourist places in Karnataka
+db.tourist_places.find(
+    { "address.state": "Karnataka" }
+).pretty();
+
+// Query 2: List tourist attractions in Kerala (excluding accommodation and food)
+db.tourist_places.find(
+    { "address.state": "Kerala" },
+    {
+        place: 1,
+        tourist_attractions: 1,
+        _id: 0
+    }
+).pretty();

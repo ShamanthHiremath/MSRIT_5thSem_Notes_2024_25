@@ -1,0 +1,138 @@
+// Create database
+use movies_db
+
+// Create collection
+db.createCollection("movies")
+
+// Sample Movie Documents
+db.movies.insertMany([
+    {
+        actor_name: "John",
+        actor_id: "A001",
+        actor_birthdate: "1980-05-15",
+        director_name: "Ram",
+        director_id: "D001",
+        director_birthdate: "1975-03-20",
+        film_title: "Dark Night",
+        year_of_production: 2018,
+        type: "Thriller"
+    },
+    {
+        actor_name: "Elly",
+        actor_id: "A002",
+        actor_birthdate: "1985-07-22",
+        director_name: "Sam",
+        director_id: "D002",
+        director_birthdate: "1970-11-30",
+        film_title: "Happy Days",
+        year_of_production: 2018,
+        type: "Comedy"
+    },
+    {
+        actor_name: "John",
+        actor_id: "A001",
+        actor_birthdate: "1980-05-15",
+        director_name: "Ram",
+        director_id: "D001",
+        director_birthdate: "1975-03-20",
+        film_title: "Midnight Run",
+        year_of_production: 2012,
+        type: "Action"
+    },
+    {
+        actor_name: "Elly",
+        actor_id: "A002",
+        actor_birthdate: "1985-07-22",
+        director_name: "Ram",
+        director_id: "D001",
+        director_birthdate: "1975-03-20",
+        film_title: "City Lights",
+        year_of_production: 2012,
+        type: "Drama"
+    },
+    {
+        actor_name: "Ram",
+        actor_id: "A003",
+        actor_birthdate: "1975-03-20",
+        director_name: "Mike",
+        director_id: "D003",
+        director_birthdate: "1968-09-10",
+        film_title: "Blue Moon",
+        year_of_production: 2019,
+        type: "Romance"
+    },
+    {
+        actor_name: "John",
+        actor_id: "A001",
+        actor_birthdate: "1980-05-15",
+        director_name: "Ram",
+        director_id: "D001",
+        director_birthdate: "1975-03-20",
+        film_title: "Last Stand",
+        year_of_production: 2018,
+        type: "Action"
+    },
+    {
+        actor_name: "Ram",
+        actor_id: "A003",
+        actor_birthdate: "1975-03-20",
+        director_name: "Sam",
+        director_id: "D002",
+        director_birthdate: "1970-11-30",
+        film_title: "Desert Storm",
+        year_of_production: 2020,
+        type: "Action"
+    },
+    {
+        actor_name: "John",
+        actor_id: "A001",
+        actor_birthdate: "1980-05-15",
+        director_name: "Mike",
+        director_id: "D003",
+        director_birthdate: "1968-09-10",
+        film_title: "Evening Star",
+        year_of_production: 2012,
+        type: "Drama"
+    },
+    {
+        actor_name: "Elly",
+        actor_id: "A002",
+        actor_birthdate: "1985-07-22",
+        director_name: "Ram",
+        director_id: "D001",
+        director_birthdate: "1975-03-20",
+        film_title: "Morning Light",
+        year_of_production: 2012,
+        type: "Romance"
+    },
+    {
+        actor_name: "Ram",
+        actor_id: "A003",
+        actor_birthdate: "1975-03-20",
+        director_name: "Sam",
+        director_id: "D002",
+        director_birthdate: "1970-11-30",
+        film_title: "Arctic Zone",
+        year_of_production: 2021,
+        type: "Thriller"
+    }
+]);
+
+// Query 1: Movies acted by John in 2018
+db.movies.find(
+    {
+        actor_name: "John",
+        year_of_production: 2018
+    }
+).pretty();
+
+// Query 2: Actor names and movie types directed by Ram
+db.movies.find(
+    { director_name: "Ram" },
+    {
+        actor_name: 1,
+        type: 1,
+        _id: 0
+    }
+).pretty();
+

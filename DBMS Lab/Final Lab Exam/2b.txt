@@ -1,0 +1,174 @@
+// Create database
+use restaurant_db
+
+// Create collection
+db.createCollection("restaurants")
+
+// Sample Restaurant Documents
+db.restaurants.insertMany([
+    {
+        name: "Pasta Paradise",
+        address: {
+            building: "45",
+            street: "MG Road",
+            area: "Central Bangalore",
+            pincode: 560001
+        },
+        id: "R001",
+        cuisine: "Italian",
+        nearby_landmarks: ["Garuda Mall", "Trinity Metro"],
+        online_delivery: true,
+        famous_for: "Carbonara"
+    },
+    {
+        name: "Punjab House",
+        address: {
+            building: "22",
+            street: "Brigade Road",
+            area: "Central Bangalore",
+            pincode: 560002
+        },
+        id: "R002",
+        cuisine: "North Indian",
+        nearby_landmarks: ["Commercial Street", "Church Street"],
+        online_delivery: true,
+        famous_for: "North Indian Thali"
+    },
+    {
+        name: "Romano's",
+        address: {
+            building: "78",
+            street: "Indiranagar 100ft Road",
+            area: "Indiranagar",
+            pincode: 560038
+        },
+        id: "R003",
+        cuisine: "Italian",
+        nearby_landmarks: ["Metro Station", "DMart"],
+        online_delivery: true,
+        famous_for: "Wood-fired Pizza"
+    },
+    {
+        name: "Delhi Darbar",
+        address: {
+            building: "12",
+            street: "Residency Road",
+            area: "Central Bangalore",
+            pincode: 560025
+        },
+        id: "R004",
+        cuisine: "North Indian",
+        nearby_landmarks: ["Mayo Hall", "Press Club"],
+        online_delivery: false,
+        famous_for: "North Indian Thali"
+    },
+    {
+        name: "Little Italy",
+        address: {
+            building: "90",
+            street: "Koramangala 5th Block",
+            area: "Koramangala",
+            pincode: 560095
+        },
+        id: "R005",
+        cuisine: "Italian",
+        nearby_landmarks: ["Forum Mall", "BDA Complex"],
+        online_delivery: true,
+        famous_for: "Risotto"
+    },
+    {
+        name: "Punjabi Tadka",
+        address: {
+            building: "33",
+            street: "HSR Layout",
+            area: "HSR",
+            pincode: 560102
+        },
+        id: "R006",
+        cuisine: "North Indian",
+        nearby_landmarks: ["Central Mall", "BDA Park"],
+        online_delivery: true,
+        famous_for: "North Indian Thali"
+    },
+    {
+        name: "Bella Italia",
+        address: {
+            building: "56",
+            street: "Whitefield Main Road",
+            area: "Whitefield",
+            pincode: 560066
+        },
+        id: "R007",
+        cuisine: "Italian",
+        nearby_landmarks: ["Phoenix Mall", "ITPL"],
+        online_delivery: true,
+        famous_for: "Pasta"
+    },
+    {
+        name: "Royal Punjab",
+        address: {
+            building: "89",
+            street: "JP Nagar 6th Phase",
+            area: "JP Nagar",
+            pincode: 560078
+        },
+        id: "R008",
+        cuisine: "North Indian",
+        nearby_landmarks: ["Metro Station", "Central Park"],
+        online_delivery: true,
+        famous_for: "North Indian Thali"
+    },
+    {
+        name: "Venice Italian",
+        address: {
+            building: "123",
+            street: "Electronic City Phase 1",
+            area: "Electronic City",
+            pincode: 560100
+        },
+        id: "R009",
+        cuisine: "Italian",
+        nearby_landmarks: ["Infosys Campus", "Tech Park"],
+        online_delivery: false,
+        famous_for: "Lasagna"
+    },
+    {
+        name: "Dilli 6",
+        address: {
+            building: "45",
+            street: "Marathahalli",
+            area: "Marathahalli",
+            pincode: 560037
+        },
+        id: "R010",
+        cuisine: "North Indian",
+        nearby_landmarks: ["Innovative Multiplex", "Bridge"],
+        online_delivery: true,
+        famous_for: "North Indian Thali"
+    }
+]);
+
+// Query 1: North Indian restaurants with thali
+db.restaurants.find(
+    {
+        cuisine: "North Indian",
+        famous_for: "North Indian Thali"
+    },
+    {
+        name: 1,
+        address: 1,
+        nearby_landmarks: 1,
+        _id: 0
+    }
+).pretty();
+
+// Query 2: All restaurants with their famous dishes
+db.restaurants.find(
+    {},
+    {
+        name: 1,
+        address: 1,
+        famous_for: 1,
+        _id: 0
+    }
+).pretty();

@@ -1,0 +1,92 @@
+-- Create Tables
+CREATE TABLE DEPARTMENT (
+    Dname VARCHAR(20),
+    Dnumber INT PRIMARY KEY,
+    MgrSSN CHAR(9),
+    MgrStartDate DATE
+);
+
+CREATE TABLE EMPLOYEE (
+    Fname VARCHAR(20),
+    Lname VARCHAR(20),
+    SSN CHAR(9) PRIMARY KEY,
+    Addrs VARCHAR(50),
+    Sex CHAR(1),
+    Salary DECIMAL(10,2),
+    SuperSSN CHAR(9),
+    Dno INT,
+    FOREIGN KEY (Dno) REFERENCES DEPARTMENT(Dnumber),
+    FOREIGN KEY (SuperSSN) REFERENCES EMPLOYEE(SSN)
+);
+
+CREATE TABLE PROJECT (
+    Pno INT PRIMARY KEY,
+    Pname VARCHAR(20),
+    Dnum INT,
+    FOREIGN KEY (Dnum) REFERENCES DEPARTMENT(Dnumber)
+);
+
+CREATE TABLE WORKS_ON (
+    ESSN CHAR(9),
+    Pno INT,
+    Hours DECIMAL(5,2),
+    PRIMARY KEY (ESSN, Pno),
+    FOREIGN KEY (ESSN) REFERENCES EMPLOYEE(SSN),
+    FOREIGN KEY (Pno) REFERENCES PROJECT(Pno)
+);
+
+-- Insert Sample Data
+INSERT INTO DEPARTMENT VALUES
+('Research', 5, '123456789', '2020-01-01'),
+('Administration', 4, '987654321', '2020-02-01'),
+('Development', 1, '555555555', '2020-03-01');
+
+INSERT INTO EMPLOYEE VALUES
+('John', 'Smith', '123456789', '731 Fondren, Houston TX', 'M', 65000, NULL, 5),
+('Franklin', 'Wong', '333444555', '638 Voss, Houston TX', 'M', 40000, '123456789', 5),
+('Joyce', 'English', '453453453', '5631 Rice, Houston TX', 'F', 25000, '333444555', 5),
+('James', 'Borg', '888665555', '450 Stone, Houston TX', 'M', 55000, NULL, 1),
+('Jennifer', 'Wallace', '987654321', '291 Berry, Bellaire TX', 'F', 43000, '888665555', 4);
+
+INSERT INTO PROJECT VALUES
+(1, 'ProductX', 5),
+(2, 'ProductY', 5),
+(3, 'ProductZ', 5),
+(10, 'Computerization', 4),
+(20, 'Reorganization', 1);
+
+INSERT INTO WORKS_ON VALUES
+('123456789', 1, 32.5),
+('123456789', 2, 7.5),
+('333444555', 2, 10.0),
+('333444555', 3, 10.0),
+('453453453', 1, 20.0),
+('453453453', 2, 20.0),
+('888665555', 20, 0.0),
+('987654321', 20, 15.0),
+('987654321', 10, 35.0);
+
+-- Query i: Employees with salary greater than all employees in dept 5
+SELECT E.Fname
+FROM EMPLOYEE E
+WHERE E.Salary > (
+    SELECT MAX(E2.Salary)
+    FROM EMPLOYEE E2
+    WHERE E2.Dno = 5
+);
+
+-- Query ii: SSNs of employees who work on projects 1, 2, or 3
+SELECT DISTINCT ESSN
+FROM WORKS_ON
+WHERE Pno IN (1, 2, 3);
+
+-- Query iii: Total hours per project
+SELECT W.Pno, P.Pname, SUM(W.Hours) as Total_Hours
+FROM WORKS_ON W
+JOIN PROJECT P ON W.Pno = P.Pno
+GROUP BY W.Pno, P.Pname;\
+
+-- or 
+SELECT Pno,SUM(Hours) 
+FROM WORKS_ON
+GROUP BY Pno;

@@ -1,0 +1,65 @@
+-- Create Tables
+CREATE TABLE AIRCRAFT (
+    Aircraft_ID INT PRIMARY KEY,
+    Aircraft_name VARCHAR(50),
+    Cruising_range INT
+);
+
+CREATE TABLE EMPLOYEE (
+    Emp_ID INT PRIMARY KEY,
+    Ename VARCHAR(50),
+    Salary DECIMAL(10,2)
+);
+
+CREATE TABLE CERTIFIED (
+    Emp_ID INT,
+    Aircraft_ID INT,
+    PRIMARY KEY (Emp_ID, Aircraft_ID),
+    FOREIGN KEY (Emp_ID) REFERENCES EMPLOYEE(Emp_ID),
+    FOREIGN KEY (Aircraft_ID) REFERENCES AIRCRAFT(Aircraft_ID)
+);
+
+-- Insert sample data
+INSERT INTO AIRCRAFT VALUES
+(1, 'Boeing 747', 8000),
+(2, 'Airbus A320', 6000),
+(3, 'Boeing 777', 7500),
+(4, 'Cessna 172', 1500),
+(5, 'Airbus A380', 8500);
+
+INSERT INTO EMPLOYEE VALUES
+(101, 'John Smith', 65000),
+(102, 'Sarah Johnson', 55000),
+(103, 'Michael Brown', 45000),
+(104, 'Emma Davis', 75000),
+(105, 'James Wilson', 48000);
+
+INSERT INTO CERTIFIED VALUES
+(101, 1),
+(101, 2),
+(102, 2),
+(102, 3),
+(104, 1),
+(104, 3),
+(104, 5);
+
+-- Query i: Find employee IDs of employees who make the highest salary
+SELECT Emp_ID
+FROM EMPLOYEE
+WHERE Salary = (
+    SELECT MAX(Salary)
+    FROM EMPLOYEE
+);
+
+-- Query ii: Find aircrafts where all certified pilots earn more than 50000
+SELECT distinct a.aname 
+FROM aircraft a, certified c, employees e 
+WHERE a.aid=c.aid and c.eid=e.eid and e.salary>50000;
+
+-- Query iii: Find employees not certified for any aircraft
+SELECT E.Emp_ID, E.Ename
+FROM EMPLOYEE E
+WHERE E.Emp_ID NOT IN (
+    SELECT DISTINCT Emp_ID
+    FROM CERTIFIED
+);

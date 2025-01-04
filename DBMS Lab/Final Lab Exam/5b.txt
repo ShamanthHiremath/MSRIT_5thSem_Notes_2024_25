@@ -1,0 +1,172 @@
+// Create database
+use tourism_db
+
+// Create collection
+db.createCollection("tourist_places")
+
+// Sample Tourist Places Documents
+db.tourist_places.insertMany([
+    {
+        place: "Munnar",
+        address: {
+            state: "Kerala"
+        },
+        id: "T001",
+        tourist_attractions: ["Tea Gardens", "Eravikulam National Park", "Echo Point", "Tea Museum"],
+        best_time: "September to March",
+        modes_of_transport: {
+            nearest_airport: "Cochin International Airport",
+            railway_station: "Aluva Railway Station",
+        },
+        accommodation: ["Luxury Resorts", "Tea Estate Stays"],
+        food_specialties: ["Kerala Fish Curry", "Appam"]
+    },
+    {
+        place: "Jaipur",
+        address: {
+            state: "Rajasthan"
+        },
+        id: "T002",
+        tourist_attractions: ["Amber Fort", "Hawa Mahal", "City Palace", "Jantar Mantar"],
+        best_time: "October to March",
+        modes_of_transport: {
+            nearest_airport: "Jaipur International Airport",
+            railway_station: "Jaipur Junction",
+        },
+        accommodation: ["Heritage Hotels", "Palace Hotels"],
+        food_specialties: ["Dal Baati Churma", "Laal Maas"]
+    },
+    {
+        place: "Alappuzha",
+        address: {
+            state: "Kerala"
+        },
+        id: "T003",
+        tourist_attractions: ["Backwaters", "Houseboats", "Alappuzha Beach", "Marari Beach"],
+        best_time: "November to February",
+        modes_of_transport: {
+            nearest_airport: "Cochin International Airport",
+            railway_station: "Alappuzha Railway Station",
+        },
+        accommodation: ["Houseboats", "Beach Resorts"],
+        food_specialties: ["Karimeen Fry", "Seafood"]
+    },
+    {
+        place: "Agra",
+        address: {
+            state: "Uttar Pradesh"
+        },
+        id: "T004",
+        tourist_attractions: ["Taj Mahal", "Agra Fort", "Fatehpur Sikri"],
+        best_time: "October to March",
+        modes_of_transport: {
+            nearest_airport: "Agra Airport",
+            railway_station: "Agra Cantt",
+        },
+        accommodation: ["Luxury Hotels", "Budget Hotels"],
+        food_specialties: ["Petha", "Mughlai Cuisine"]
+    },
+    {
+        place: "Thekkady",
+        address: {
+            state: "Kerala"
+        },
+        id: "T005",
+        tourist_attractions: ["Periyar Wildlife Sanctuary", "Spice Gardens", "Kumily"],
+        best_time: "September to May",
+        modes_of_transport: {
+            nearest_airport: "Madurai Airport",
+            railway_station: "Kottayam Railway Station",
+        },
+        accommodation: ["Wildlife Resorts", "Eco Lodges"],
+        food_specialties: ["Kerala Spice Cuisine"]
+    },
+    {
+        place: "Shimla",
+        address: {
+            state: "Himachal Pradesh"
+        },
+        id: "T006",
+        tourist_attractions: ["Mall Road", "Ridge", "Jakhu Temple", "Christ Church"],
+        best_time: "March to June",
+        modes_of_transport: {
+            nearest_airport: "Shimla Airport",
+            railway_station: "Shimla Railway Station",
+        },
+        accommodation: ["Mountain Resorts", "Cottages"],
+        food_specialties: ["Himachali Dham", "Sidu"]
+    },
+    {
+        place: "Wayanad",
+        address: {
+            state: "Kerala"
+        },
+        id: "T007",
+        tourist_attractions: ["Chembra Peak", "Edakkal Caves", "Banasura Dam"],
+        best_time: "October to May",
+        modes_of_transport: {
+            nearest_airport: "Calicut Airport",
+            railway_station: "Kozhikode Railway Station",
+        },
+        accommodation: ["Tree Houses", "Resorts"],
+        food_specialties: ["Kerala Biriyani"]
+    },
+    {
+        place: "Darjeeling",
+        address: {
+            state: "West Bengal"
+        },
+        id: "T008",
+        tourist_attractions: ["Tiger Hill", "Toy Train", "Tea Gardens"],
+        best_time: "March to May",
+        modes_of_transport: {
+            nearest_airport: "Bagdogra Airport",
+            railway_station: "Darjeeling Station",
+        },
+        accommodation: ["Heritage Hotels", "Homestays"],
+        food_specialties: ["Momos", "Thukpa"]
+    },
+    {
+        place: "Kovalam",
+        address: {
+            state: "Kerala"
+        },
+        id: "T009",
+        tourist_attractions: ["Lighthouse Beach", "Hawah Beach", "Water Sports"],
+        best_time: "September to March",
+        modes_of_transport: {
+            nearest_airport: "Trivandrum International Airport",
+            railway_station: "Trivandrum Central",
+        },
+        accommodation: ["Beach Resorts", "Hotels"],
+        food_specialties: ["Seafood"]
+    },
+    {
+        place: "Udaipur",
+        address: {
+            state: "Rajasthan"
+        },
+        id: "T010",
+        tourist_attractions: ["City Palace", "Lake Pichola", "Jagdish Temple"],
+        best_time: "October to March",
+        modes_of_transport: {
+            nearest_airport: "Udaipur Airport",
+            railway_station: "Udaipur Railway Station",
+        },
+        accommodation: ["Lake Palace Hotels", "Heritage Hotels"],
+        food_specialties: ["Dal Bati", "Rajasthani Thali"]
+    }
+]);
+
+// Query 1: List tourist attractions of Kerala
+db.tourist_places.find(
+    { "address.state": "Kerala" },
+    {
+        place: 1,
+        tourist_attractions: 1,
+        _id: 0
+    }
+).pretty();
+
+// Query 2: List places sorted by state
+db.tourist_places.find().sort({ "address.state": 1 }).pretty();

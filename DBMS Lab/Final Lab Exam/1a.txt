@@ -1,0 +1,65 @@
+-- Create Tables
+CREATE TABLE SAILORS (
+    Sid INT PRIMARY KEY,
+    Sname VARCHAR(20),
+    Rating INT,
+    Age INT
+);
+
+CREATE TABLE BOATS (
+    Bid INT PRIMARY KEY,
+    Bname VARCHAR(20),
+    Colour VARCHAR(10)
+);
+
+CREATE TABLE RESERVES (
+    Sid INT,
+    Bid INT,
+    day DATE,
+    PRIMARY KEY (Sid, Bid, day),
+    FOREIGN KEY (Sid) REFERENCES SAILORS(Sid),
+    FOREIGN KEY (Bid) REFERENCES BOATS(Bid)
+);
+
+-- Insert sample data into SAILORS
+INSERT INTO SAILORS VALUES
+(1, 'John', 8, 25),
+(2, 'Dave', 7, 32),
+(3, 'Smith', 9, 28),
+(4, 'Mike', 6, 35),
+(5, 'Peter', 8, 30);
+
+-- Insert sample data into BOATS
+INSERT INTO BOATS VALUES
+(101, 'Seabird', 'Red'),
+(102, 'Waves', 'Green'),
+(103, 'Sailor', 'Blue'),
+(104, 'Marine', 'Red'),
+(105, 'Storm', 'White');
+
+-- Insert sample data into RESERVES
+INSERT INTO RESERVES VALUES
+(1, 101, '2024-01-01'),
+(2, 102, '2024-01-02'),
+(3, 103, '2024-01-03'),
+(1, 104, '2024-01-04'),
+(2, 105, '2024-01-05');
+
+-- Query i: Find names of sailors who have reserved at least one boat
+SELECT DISTINCT S.Sname
+FROM SAILORS S
+JOIN RESERVES R ON S.Sid = R.Sid;
+
+-- Query ii: Find Sid's of sailors who have reserved a red or green boat
+SELECT DISTINCT R.Sid
+FROM RESERVES R
+JOIN BOATS B ON R.Bid = B.Bid
+WHERE B.Colour IN ('Red', 'Green');
+
+-- Query iii: Find Sid's of sailors who have not reserved a boat
+SELECT S.Sid
+FROM SAILORS S
+WHERE S.Sid NOT IN (
+    SELECT DISTINCT Sid 
+    FROM RESERVES
+);

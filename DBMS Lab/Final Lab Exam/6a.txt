@@ -1,0 +1,89 @@
+-- Create Department table
+CREATE TABLE DEPARTMENT (
+    Dname VARCHAR(50) NOT NULL,
+    Dnumber INT NOT NULL PRIMARY KEY,
+    MgrSSN CHAR(9) NOT NULL,
+    MgrStartDate DATE NOT NULL
+);
+
+-- Create Employee table
+CREATE TABLE EMPLOYEE (
+    Fname VARCHAR(50) NOT NULL,
+    Lname VARCHAR(50) NOT NULL,
+    SSN CHAR(9) PRIMARY KEY,
+    Addrs VARCHAR(100) NOT NULL,
+    Sex CHAR(1) NOT NULL,
+    Salary DECIMAL(10,2) NOT NULL,
+    SuperSSN CHAR(9),
+    Dno INT NOT NULL,
+    FOREIGN KEY (SuperSSN) REFERENCES EMPLOYEE(SSN),
+    FOREIGN KEY (Dno) REFERENCES DEPARTMENT(Dnumber)
+);
+
+-- Create Dependent table
+CREATE TABLE DEPENDENT (
+    Dname VARCHAR(50) NOT NULL,
+    ESSN CHAR(9) NOT NULL,
+    PRIMARY KEY (Dname, ESSN),
+    FOREIGN KEY (ESSN) REFERENCES EMPLOYEE(SSN)
+);
+
+-- Insert sample data into Department
+INSERT INTO DEPARTMENT VALUES
+('Research Tech', 1, '111222333', '2020-01-15'),
+('Software Tech', 2, '222333444', '2020-02-20'),
+('Hardware Tech', 3, '333444555', '2020-03-25'),
+('Marketing', 4, '444555666', '2020-04-10'),
+('Finance', 5, '555666777', '2020-05-05');
+
+-- Insert sample data into Employee
+INSERT INTO EMPLOYEE VALUES
+('John', 'Smith', '111222333', '123 Main St', 'M', 75000, NULL, 1),
+('Mary', 'Jones', '222333444', '456 Oak Ave', 'F', 65000, '111222333', 2),
+('Robert', 'Brown', '333444555', '789 Pine Rd', 'M', 85000, NULL, 3),
+('Sarah', 'Wilson', '444555666', '321 Elm St', 'F', 70000, '333444555', 4),
+('James', 'Davis', '555666777', '654 Maple Dr', 'M', 80000, NULL, 5);
+
+-- Insert sample data into Dependent
+INSERT INTO DEPENDENT VALUES
+('Michael', '111222333'),
+('Emma', '111222333'),
+('David', '333444555'),
+('Lisa', '444555666'),
+('John Jr', '555666777');
+
+-- Query i: Department name and average salary of employees
+SELECT D.Dname, AVG(E.Salary) as Avg_Salary
+FROM DEPARTMENT D
+JOIN EMPLOYEE E ON D.Dnumber = E.Dno
+GROUP BY D.Dname;
+
+--OR 
+SELECT Dname, AVG(Salary)
+FROM DEPARTMENT, EMPLOYEE;
+
+
+-- Query ii: Managers with at least one dependent
+SELECT DISTINCT E.Fname, E.Lname
+FROM EMPLOYEE E
+JOIN DEPARTMENT D ON E.SSN = D.MgrSSN
+JOIN DEPENDENT DEP ON E.SSN = DEP.ESSN;
+
+--OR 
+SELECT Fname, Lname
+FROM EMPLOYEE
+WHERE EXISTS(SELECT * FROM DEPENDENT WHERE Ssn=Essn)
+AND
+EXISTS (SELECT * FROM DEPARTMENT WHERE Ssn=Mgr_ssn)
+
+
+-- Query iii: Departments with 'tech' in their name
+SELECT *
+FROM DEPARTMENT
+WHERE LOWER(Dname) LIKE '%tech%';
+
+--OR 
+
+SELECT *
+FROM DEPARTMENT
+WHERE EXISTS(SUBSTRING('tech',1) AS ExtractString);
