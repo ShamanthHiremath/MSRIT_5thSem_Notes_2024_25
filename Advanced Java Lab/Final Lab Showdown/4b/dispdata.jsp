@@ -14,11 +14,11 @@
 
         if (usn != null && !usn.trim().isEmpty()) {
             Connection conn = null;
-            PreparedStatement stmt = null;
+            PreparedStatement prepStmt = null;
             ResultSet rs = null;
-            String jdbcURL = "jdbc:mysql://localhost:3306/your_database_name";
-            String jdbcUsername = "your_username";
-            String jdbcPassword = "your_password";
+            String jdbcURL = "jdbc:mysql://localhost:3306/USN";
+            String jdbcUsername = "root";
+            String jdbcPassword = "";
             
             try {
                 // Load and register MySQL driver (optional in newer JDBC versions)
@@ -29,11 +29,11 @@
 
                 // Prepare SQL query to fetch student details based on USN
                 String sql = "SELECT name FROM students WHERE usn = ?";
-                stmt = conn.prepareStatement(sql);
-                stmt.setString(1, usn);
+                prepStmt = conn.prepareStatement(sql);
+                prepStmt.setString(1, usn);
 
                 // Execute the query and retrieve results
-                rs = stmt.executeQuery();
+                rs = prepStmt.executeQuery();
 
                 if (rs.next()) {
                     // If USN is found, display student details
@@ -51,7 +51,7 @@
                 // Close resources
                 try {
                     if (rs != null) rs.close();
-                    if (stmt != null) stmt.close();
+                    if (prepStmt != null) prepStmt.close();
                     if (conn != null) conn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();

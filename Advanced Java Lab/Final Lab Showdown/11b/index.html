@@ -8,16 +8,25 @@
 <body>
     <h1>Update Subject</h1>
     <form action="FacultySubjectsServlet" method="POST">
-        <label for="subId">Subject ID:</label>
-        <input type="text" id="subId" name="subId"><br><br>
+        <!-- <label for="subId">Subject ID:</label> -->
+        Subject ID: <input type="text" id="subId" name="subId"><br><br>
         
-        <label for="subName">Subject Name:</label>
-        <input type="text" id="subName" name="subName"><br><br>
+        <!-- <label for="subName">Subject Name:</label> -->
+        Subject Name: <input type="text" id="subName" name="subName"><br><br>
         
-        <label for="facultyId">Faculty ID:</label>
-        <input type="text" id="facultyId" name="facultyId"><br><br>
+        <!-- <label for="facultyId">Faculty ID:</label> -->
+        Faculty ID: <input type="text" id="facultyId" name="facultyId"><br><br>
 
         <button type="submit">Update Subject</button>
     </form>
+
+    <h1>View Subjects Allotted to Faculty</h1>
+    <form action="FacultySubjectsServlet" method="GET">
+        <!-- <label for="facultyId">Enter Faculty ID: </label> -->
+        Faculty Id: <input type="text" name="facultyId"required>
+        <input type="submit" value="View Subjects">
+    </form>
+
+    <hr>
 </body>
 </html>

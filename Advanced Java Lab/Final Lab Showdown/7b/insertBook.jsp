@@ -10,7 +10,7 @@
         // Database connection details
         String url = "jdbc:mysql://localhost:3306/book_db"; // Database URL
         String user = "root"; // Database username
-        String password = "password"; // Database password
+        String password = ""; // Database password
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -18,7 +18,7 @@
 
         try {
             // Load MySQL JDBC driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver"); <!-- com.mysql.cj.jdbc.Driver is used in new versions -->
 
             // Establish connection to the database
             conn = DriverManager.getConnection(url, user, password);
