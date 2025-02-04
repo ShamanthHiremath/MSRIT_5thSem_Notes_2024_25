@@ -19,6 +19,14 @@ URL = "jdbc:mysql://localhost:3306/";
 USER = "root";
 PASS = "";
 
+
+// to ignore duplicate databases/tables
+CREATE DATABASE IF NOT EXISTS db_name;
+CREATE TABLE IF NOT EXISTS table_name (column1 datatype, column2 datatype, ...);
+
+// to ignore duplicate entries
+INSERT IGNORE INTO faculty (Faculty_ID, Faculty_Name) VALUES (1, 'Dr. Smith'), (2, 'Prof. Johnson');
+
 Connection conn = DriverManager.getConnection(URL, USER, PASS);
 
 Statement stmt = conn.createStatement(); //statement is used for normal implicitly defined query executions
@@ -53,6 +61,10 @@ stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_
 resultSet.absolute(Nth_ROW); // move cursor to Nth row
 
 resultSet.isBeforeFirst() || resultSet.isAfterLast()
+
+resultSet.updateString("Name", "Advanced Java Programming Lab");
+resultSet.updateRow(); 
+
 
 //auto-commits
 conn.setAutoCommit(false); // Disable auto-commit for transaction management
