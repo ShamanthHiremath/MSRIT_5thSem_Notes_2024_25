@@ -19,7 +19,7 @@
                 // Throw an exception if credentials don't match
                 <!-- throw new Exception("Invalid username or password!"); -->
 
-                response.sendRedirect("register.html");
+                response.sendRedirect("index.html");
             } else {
                 out.println("<h3>Welcome, " + username + "!</h3>");
 
