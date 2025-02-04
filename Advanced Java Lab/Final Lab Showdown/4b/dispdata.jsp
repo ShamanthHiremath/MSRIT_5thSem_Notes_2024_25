@@ -22,7 +22,7 @@
             
             try {
                 // Load and register MySQL driver (optional in newer JDBC versions)
-                Class.forName("com.mysql.cj.jdbc.Driver");
+                Class.forName("com.mysql.jdbc.Driver");
 
                 // Establish a database connection
                 conn = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
