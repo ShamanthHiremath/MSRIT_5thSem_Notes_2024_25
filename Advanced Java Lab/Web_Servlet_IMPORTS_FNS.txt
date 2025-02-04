@@ -13,7 +13,11 @@ import jakarta.servlet.ServletException;
 import java.text.*;
 import java.util.*;
 
+// to ignore duplicate entries
+INSERT IGNORE INTO faculty (Faculty_ID, Faculty_Name) VALUES (1, 'Dr. Smith'), (2, 'Prof. Johnson');
+
 functions -->>
+
 
 DATATYPE var = request.getParamater("INPUT_NAME_IN_FORM");
 
@@ -24,3 +28,40 @@ out.println("HTML_CONTENT");
 
 response.sendRedirect("FILENAME.html");
 
+// Visit Count
+HttpSession session = request.getSession(true); 
+Integer visitCount = (Integer) session.getAttribute("visitCount");
+session.setAttribute("visitCount", visitCount);
+
+// Sessions for Login
+HttpSession session = request.getSession();
+session.setAttribute("username", username);
+
+// Update (POST) and Select (GET) Query
+in public void init() throws ServletException initialise the connection, databse, table, insertions, etc.
+
+// Date 
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+Date dob = sdf.parse(dobsting);
+Calendar today = Calendar.getInstance();
+
+today.get(Calendar.YEAR) - dob.getYear() - 1900;
+today.get(Calendar.MONTH) - dob.getMonth();
+today.get(Calendar.DATE) - dob.getDate();
+
+
+
+JSP Programs:
+
+// for jdbc connections in JSP
+add <%@ page import="java.sql.*,java.io.*"%> at top 
+add inside <% Class.forName("com.mysql.cj.jdbc.Driver");
+
+// directly write java code in JSP, no need to mention classes of only HttpServlet Java Servlet Programs
+Ex: 
+<% 
+    String usn = request.getParameter("usn");
+    out.println("Hello World");
+    int a = 10;
+    out.println(a);
+%>

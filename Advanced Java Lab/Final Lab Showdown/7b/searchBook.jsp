@@ -16,6 +16,7 @@
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+            <!-- use com.mysql.jdbc.Driver for old VERSIONS (RIT LABS are older than Queen Elizabeth) -->
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BookStore", "root", "");
 
             String query = "SELECT * FROM Books WHERE Title = ?";

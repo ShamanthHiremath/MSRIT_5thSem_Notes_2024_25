@@ -55,6 +55,30 @@ public class Calcserv extends HttpServlet {
                     message = "Invalid operator selected!";
             }
 
+
+            if (operator.equals("+")) {
+                result = num1 + num2;
+                message = "Result: " + num1 + " + " + num2 + " = " + result;
+            } else if (operator.equals("-")) {
+                result = num1 - num2;
+                message = "Result: " + num1 + " - " + num2 + " = " + result;
+            } else if (operator.equals("*")) {
+                result = num1 * num2;
+                message = "Result: " + num1 + " * " + num2 + " = " + result;
+            } else if (operator.equals("/")) {
+                if (num2 == 0) {
+                    message = "Error: Cannot divide by zero!";
+                } else {
+                    result = num1 / num2;
+                    message = "Result: " + num1 + " / " + num2 + " = " + result;
+                }
+            } else if (operator.equals("^")) {
+                result = Math.pow(num1, num2);
+                message = "Result: " + num1 + " ^ " + num2 + " = " + result;
+            } else {
+                message = "Invalid operator selected!";
+            }
+
             // Display the result or error message
             out.println("<html>");
             out.println("<head><title>Calculator Result</title></head>");

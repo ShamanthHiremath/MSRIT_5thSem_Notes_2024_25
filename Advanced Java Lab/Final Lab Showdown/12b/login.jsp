@@ -17,10 +17,18 @@
         if (username != null && password != null) {
             if (!username.equals("Admin") || !password.equals("Admin123")) {
                 // Throw an exception if credentials don't match
-                throw new Exception("Invalid username or password!");
+                <!-- throw new Exception("Invalid username or password!"); -->
+
+                response.sendRedirect("register.html");
             } else {
                 out.println("<h3>Welcome, " + username + "!</h3>");
+
+                HttpSession session = request.getSession();
+                session.setAttribute("username", username);
             }
+        }
+        else{
+            response.sendRedirect("register.html");
         }
     %>
 </body>

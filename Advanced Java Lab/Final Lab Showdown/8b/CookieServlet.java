@@ -7,10 +7,11 @@ public class CookieServlet extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Set the response content type to HTML
+        // SET the response content type to HTML THE METHOD IS POST
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
+        //set post cookies
         // Create 4 cookies
         Cookie cookie1 = new Cookie("cookie1", "value1");
         Cookie cookie2 = new Cookie("cookie2", "value2");
@@ -32,6 +33,7 @@ public class CookieServlet extends HttpServlet {
         response.addCookie(cookie4);
 
         // Retrieve all cookies
+        // Get cookies from the request METHOD IS GET
         Cookie[] cookies = request.getCookies();
 
         // Display cookies
