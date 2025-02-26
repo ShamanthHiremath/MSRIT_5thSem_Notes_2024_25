@@ -84,7 +84,7 @@ WHERE Pno IN (1, 2, 3);
 SELECT W.Pno, P.Pname, SUM(W.Hours) as Total_Hours
 FROM WORKS_ON W
 JOIN PROJECT P ON W.Pno = P.Pno
-GROUP BY W.Pno, P.Pname;\
+GROUP BY W.Pno, P.Pname;
 
 -- or 
 SELECT Pno,SUM(Hours) 

@@ -1,0 +1,52 @@
+
+-- changing the column name
+ALTER TABLE your_table_name RENAME COLUMN sname TO name;
+ALTER TABLE your_table_name CHANGE sname name VARCHAR(255);
+
+-- changing the column type
+ALTER TABLE your_table_name ALTER COLUMN your_column_name TYPE new_data_type;
+
+-- adding primary KEY
+ALTER TABLE your_table_name ADD PRIMARY KEY (column_name);
+
+-- adding foreign KEY
+ALTER TABLE your_table_name ADD FOREIGN KEY (column_name) REFERENCES other_table_name(column_name);
+
+ALTER TABLE your_table_name ADD CONSTRAINT fk_foreign_key_name FOREIGN KEY (column_name) REFERENCES other_table_name(other_column_name);
+
+-- dropping primary KEY
+ALTER TABLE your_table_name DROP CONSTRAINT existing_primary_key_name;
+
+-- dropping foreign KEY
+ALTER TABLE your_table_name DROP CONSTRAINT existing_foreign_key_name;
+
+-- dropping a column
+ALTER TABLE your_table_name DROP COLUMN column_name;
+
+-- dropping a table
+DROP TABLE your_table_name;
+
+-- dropping a database
+DROP DATABASE your_database_name;
+
+
+
+
+MONGO DB
+
+db.collectionname.find({
+  $or: [
+    { fieldname: 'abc' },
+    { fieldname: 'scd' }
+  ]
+});
+
+
+db.collectionname.find({
+  nearby_landmarks: "Church Street"
+});
+
+
+db.collectionname.find({
+  "address.area": "MG Road"
+});

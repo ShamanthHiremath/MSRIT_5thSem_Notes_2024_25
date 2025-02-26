@@ -126,6 +126,30 @@ db.movies.find(
     }
 ).pretty();
 
+// OR 
+
+db.movies.find(
+    {
+        $or: [
+            { actor_name: "John" },
+            { actor_name: "Elly" }
+        ],
+        year_of_production: 2012
+    }
+).pretty();
+
+// OR
+db.movies.find({
+  $and: [
+    { $or: [
+      { actor_name: "John" },
+      { actor_name: "Elly"}
+    ]},
+    { year_of_production: 2012 }
+  ]
+}).pretty();
+
+
 // Query 2: Movies where Ram has acted, sorted by movie name
 db.movies.find(
     { actor_name: "Ram" },

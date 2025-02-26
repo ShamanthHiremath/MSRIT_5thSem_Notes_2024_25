@@ -1,0 +1,201 @@
+1. Retrieve Employee Details
+Problem: Retrieve the name and department of an employee given their employee ID.
+2. 2. Check Customer Account Balance
+Problem: Fetch the balance of a specific customer’s account using their account number.
+3. 3. Insert a New Record
+Problem: Insert a new product into a database, given Product ID, Name, and Price.
+
+
+4. Problem: Delete a customer record from the database given their Customer ID.
+
+5. Problem: Calculate the total sales amount for a specific customer given their Customer ID.
+6. Problem: Fetch the details of a customer based on their first name and phone number.
+
+******************************cursor*****************************
+
+1. Problem Statements  (Using Cursor)
+1. List All Employees in a Department
+Problem: Retrieve and display all employees belonging to a specific department.
+2. Problem: Calculate the annual salary for all employees and display their details.
+
+
+
+
+
+
+
+
+
+
+
+1. #include <stdio.h>
+#include <sqlca.h>
+
+int main() {
+    EXEC SQL BEGIN DECLARE SECTION;
+    int emp_id;
+    char emp_name[50];
+    char emp_department[50];
+    EXEC SQL END DECLARE SECTION;
+
+    printf("Enter Employee ID: ");
+    scanf("%d", &emp_id);
+
+    EXEC SQL CONNECT TO mydb USER myuser USING mypassword;
+
+    EXEC SQL SELECT name, department INTO :emp_name, :emp_department
+             FROM employees
+             WHERE id = :emp_id;
+
+    if (sqlca.sqlcode == 0) {
+        printf("Employee Name: %s\n", emp_name);
+        printf("Department: %s\n", emp_department);
+    } else {
+        printf("Employee not found.\n");
+    }
+
+    EXEC SQL DISCONNECT;
+    return 0;
+}
+
+
+
+2. 
+
+#include <stdio.h>
+#include <sqlca.h>
+
+int main() {
+    EXEC SQL BEGIN DECLARE SECTION;
+    int account_no;
+    float balance;
+    EXEC SQL END DECLARE SECTION;
+
+    printf("Enter Account Number: ");
+    scanf("%d", &account_no);
+
+    EXEC SQL CONNECT TO mydb USER myuser USING mypassword;
+
+    EXEC SQL SELECT balance INTO :balance
+             FROM accounts
+             WHERE account_no = :account_no;
+
+    if (sqlca.sqlcode == 0) {
+        printf("Account Balance: $%.2f\n", balance);
+    } else {
+        printf("Account not found.\n");
+    }
+
+    EXEC SQL DISCONNECT;
+    return 0;
+}
+
+3.
+
+#include <stdio.h>
+#include <sqlca.h>
+
+int main() {
+    EXEC SQL BEGIN DECLARE SECTION;
+    int product_id;
+    char product_name[50];
+    float product_price;
+    EXEC SQL END DECLARE SECTION;
+
+    printf("Enter Product ID: ");
+    scanf("%d", &product_id);
+    printf("Enter Product Name: ");
+    scanf("%s", product_name);
+    printf("Enter Product Price: ");
+    scanf("%f", &product_price);
+
+    EXEC SQL CONNECT TO mydb USER myuser USING mypassword;
+
+    EXEC SQL INSERT INTO products (id, name, price)
+             VALUES (:product_id, :product_name, :product_price);
+
+    if (sqlca.sqlcode == 0) {
+        printf("Product added successfully.\n");
+    } else {
+        printf("Error adding product.\n");
+    }
+
+    EXEC SQL DISCONNECT;
+    return 0;
+}
+
+
+
+***********************************************
+
+
+
+
+#include <stdio.h>
+#include <sqlca.h>
+int main() {
+    EXEC SQL BEGIN DECLARE SECTION;
+    char department_name[50];
+    int emp_id;
+    char emp_name[50];
+    EXEC SQL END DECLARE SECTION;
+    printf("Enter Department Name: ");
+    scanf("%s", department_name);
+    EXEC SQL CONNECT TO mydb USER myuser USING mypassword;
+    EXEC SQL DECLARE emp_cursor CURSOR FOR
+        SELECT id, name FROM employees WHERE department = :department_name;
+
+    EXEC SQL OPEN emp_cursor;
+
+    printf("Employees in %s department:\n", department_name);
+    printf("ID\tName\n");
+    while (1) {
+        EXEC SQL FETCH emp_cursor INTO :emp_id, :emp_name;
+        if (sqlca.sqlcode == 100) break; // End of data
+        printf("%d\t%s\n", emp_id, emp_name);
+    }
+    EXEC SQL CLOSE emp_cursor;
+    EXEC SQL DISCONNECT;
+    return 0;
+}
+
+
+
+
+
+
+2. 
+
+#include <stdio.h>
+#include <sqlca.h>
+
+int main() {
+    EXEC SQL BEGIN DECLARE SECTION;
+    int emp_id;
+    char emp_name[50];
+    float monthly_salary;
+    float annual_salary;
+    EXEC SQL END DECLARE SECTION;
+
+    EXEC SQL CONNECT TO mydb USER myuser USING mypassword;
+
+    EXEC SQL DECLARE salary_cursor CURSOR FOR
+        SELECT id, name, monthly_salary FROM employees;
+
+    EXEC SQL OPEN salary_cursor;
+
+    printf("Salary Report:\n");
+    printf("ID\tName\t\tMonthly Salary\tAnnual Salary\n");
+
+    while (1) {
+        EXEC SQL FETCH salary_cursor INTO :emp_id, :emp_name, :monthly_salary;
+        if (sqlca.sqlcode == 100) break; // End of data
+        annual_salary = monthly_salary * 12;
+        printf("%d\t%s\t\t%.2f\t\t%.2f\n", emp_id, emp_name, monthly_salary, annual_salary);
+    }
+
+    EXEC SQL CLOSE salary_cursor;
+    EXEC SQL DISCONNECT;
+
+    return 0;
+}

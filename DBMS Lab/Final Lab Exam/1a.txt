@@ -50,11 +50,18 @@ SELECT DISTINCT S.Sname
 FROM SAILORS S
 JOIN RESERVES R ON S.Sid = R.Sid;
 
+-- or
+select distinct(sname) from soilr,res where rsid=sid  
+
+
 -- Query ii: Find Sid's of sailors who have reserved a red or green boat
 SELECT DISTINCT R.Sid
 FROM RESERVES R
 JOIN BOATS B ON R.Bid = B.Bid
 WHERE B.Colour IN ('Red', 'Green');
+
+-- or
+select rsid from boat,res where rbid=bid and clr="block" or clr="blue";
 
 -- Query iii: Find Sid's of sailors who have not reserved a boat
 SELECT S.Sid
@@ -63,3 +70,6 @@ WHERE S.Sid NOT IN (
     SELECT DISTINCT Sid 
     FROM RESERVES
 );
+
+-- or
+select sid from soilr,res where sid not in(select rsid from res);

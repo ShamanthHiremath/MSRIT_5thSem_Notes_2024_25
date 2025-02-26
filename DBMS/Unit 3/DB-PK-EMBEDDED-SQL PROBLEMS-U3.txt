@@ -1,0 +1,23 @@
+1. Retrieve Employee Details
+Problem: Retrieve the name and department of an employee given their employee ID.
+2. 2. Check Customer Account Balance
+Problem: Fetch the balance of a specific customer’s account using their account number.
+3. 3. Insert a New Record
+Problem: Insert a new product into a database, given Product ID, Name, and Price.
+
+
+4. Problem: Delete a customer record from the database given their Customer ID.
+
+5. Problem: Calculate the total sales amount for a specific customer given their Customer ID.
+6. Problem: Fetch the details of a customer based on their first name and phone number.
+
+******************************cursor*****************************
+
+1. Problem Statements  (Using Cursor)
+1. List All Employees in a Department
+Problem: Retrieve and display all employees belonging to a specific department.
+2. Problem: Calculate the annual salary for all employees and display their details.
+
+
+
+
